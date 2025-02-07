@@ -1,5 +1,8 @@
 # Laravel To-Do App
 
+
+![alt text](image-1.png)
+
 ## Description
 
 This is a simple To-Do application built with Laravel. It allows users to create, update, and delete tasks. Tasks are dynamically updated with a status (completed or pending), and the app provides a user-friendly interface for task management.
@@ -28,6 +31,6 @@ Make sure you have the following installed on your system:
    ```bash
    git clone https://github.com/Mohammedali03/To_Do-App.git
 
+details of a task section 
+![alt text](image-2.png)
 
-
-![alt text](image-1.png)
