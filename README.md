@@ -30,6 +30,59 @@ Make sure you have the following installed on your system:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/Mohammedali03/To_Do-App.git
+   Navigate to the project folder:
+
+bash
+Copier
+Modifier
+cd todo-app
+Install the dependencies: Run the following command to install the necessary dependencies via Composer:
+
+bash
+Copier
+Modifier
+composer install
+Set up the environment:
+
+Copy the .env.example file to .env:
+bash
+Copier
+Modifier
+cp .env.example .env
+Generate the application key:
+bash
+Copier
+Modifier
+php artisan key:generate
+Update your database settings in .env. For example:
+env
+Copier
+Modifier
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
+Migrate the database: Run the migrations to create the necessary tables for the application:
+
+bash
+Copier
+Modifier
+php artisan migrate
+Seed the database (optional): If you'd like to seed the database with sample data, you can run the following command:
+
+bash
+Copier
+Modifier
+php artisan db:seed
+Serve the application: Start the Laravel development server:
+
+bash
+Copier
+Modifier
+php artisan serve
+
 
 details of a task section 
 ![alt text](image-2.png)
