@@ -34,7 +34,7 @@ class TasksController extends Controller
              'status'=>'false'
         ]) ;
         tasks::create($validated);
-       return redirect()->route('tasks.index')->with("success","task created succssefuly"); ;
+       return redirect()->route('tasks.index')->with("success","task created successfuly"); ;
     }
 
     /**
