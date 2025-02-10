@@ -11,8 +11,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+   
     Route::resource('tasks', TasksController::class);
 
 Route::patch('/tasks/toggle/{id}', [TasksController::class, 'toggle'])->name('tasks.toggle');
