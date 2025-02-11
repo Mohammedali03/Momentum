@@ -1,6 +1,7 @@
 # Laravel To-Do App
+![alt text](image-6.png)
+![alt text](image-7.png)
 
-![alt text](image-3.png)
 
 
 ## Description
@@ -86,4 +87,5 @@ php artisan serve
 
 details of a task section 
 ![alt text](image-2.png)
-
+![alt text](image-4.png)
+![alt text](image-5.png)
