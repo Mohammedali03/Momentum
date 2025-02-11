@@ -2,24 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Tasks;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TasksController extends Controller
 {
     /**
+     * Ensure the user is authenticated for all methods.
+     */
+ 
+
+    /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        $tasks = Tasks::all();
-     return view('home',compact('tasks'));
+        // Retrieve only tasks for the authenticated user
+        $tasks = auth()->user()->tasks()->get();
+        return view('home', compact('tasks'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         return view('create');
     }
@@ -30,29 +39,35 @@ class TasksController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'task'=>'required|string|max:255',
-             'status'=>'false'
-        ]) ;
-        tasks::create($validated);
-       return redirect()->route('tasks.index')->with("success","task created successfuly"); ;
+            'task' => 'required|string|max:255',
+        ]);
+
+        // Create task for the authenticated user
+        auth()->user()->tasks()->create([
+            'task' => $validated['task'],
+            'status' => false, // Default status
+        ]);
+
+        return redirect()->route('tasks.index')->with("success", "Task created successfully");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): View
     {
-        $var = Tasks::find($id);
-        return view('show',compact('var')); ;
+        
+        $var = auth()->user()->tasks()->findOrFail($id);
+        return view('show', compact('var'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        $updated = Tasks::find($id);
-        return view('edit',compact("updated"));
+        $updated = auth()->user()->tasks()->findOrFail($id);
+        return view('edit', compact("updated"));
     }
 
     /**
@@ -60,33 +75,35 @@ class TasksController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validated=$request->validate([
-            'task'=>'required|string|max:255'
-
+        $validated = $request->validate([
+            'task' => 'required|string|max:255'
         ]);
-       $task=Tasks::find($id);
+
+        $task = auth()->user()->tasks()->findOrFail($id);
         $task->update($validated);
-        return redirect()->route("tasks.index")->with("success","task updated");
+
+        return redirect()->route("tasks.index")->with("success", "Task updated successfully");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tasks $task)
+    public function destroy(string $id)
     {
+        $task = auth()->user()->tasks()->findOrFail($id);
         $task->delete();
-       return redirect()->route("tasks.index")->with("success","task deleted");
+
+        return redirect()->route("tasks.index")->with("success", "Task deleted successfully");
     }
 
-      /**
+    /**
      * Toggle the status of the specified task.
      */
-    public function toggle($id){
-        $task = Tasks::find($id);
+    public function toggle(string $id)
+    {
+        $task = auth()->user()->tasks()->findOrFail($id);
         $task->update(['status' => !$task->status]);
-     
-        return redirect()->route('tasks.index');
-        }
-  
-    }
 
+        return redirect()->route('tasks.index');
+    }
+}

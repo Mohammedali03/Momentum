@@ -2,8 +2,10 @@
 
 @section('content')
 
+
+
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="text-primary">Tasks Management</h1>
+    <h1 class="text-primary">Tasks </h1>
     <a href="{{ route('tasks.create') }}" class="btn btn-success">Create Task</a>
 </div>
 
@@ -45,5 +47,7 @@
         @endforeach
     </tbody>
 </table>
+
+{{-- <a href="{{route('dashboard')}}">logout</a> --}}
 
 @endsection

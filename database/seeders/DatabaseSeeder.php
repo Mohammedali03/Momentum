@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Tasks::create([
-            "task"=>"Task 1 "
+        // Tasks::create([
+        //     "task"=>"Task 1 "
         
-        ]);
+        // ]);
     }
 }
