@@ -7,6 +7,8 @@ use App\Models\Tasks;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use PDF;
+use League\Csv\Writer;
 
 class TasksController extends Controller
 {
@@ -18,11 +20,37 @@ class TasksController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        // Retrieve only tasks for the authenticated user
-        $tasks = auth()->user()->tasks()->get();
-        return view('home', compact('tasks'));
+        $query = auth()->user()->tasks();
+
+        // Apply filters
+        if ($request->priority) {
+            $query->where('priority', $request->priority);
+        }
+
+        // Apply sorting
+        if ($request->sort) {
+            $query->orderBy($request->sort);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $tasks = $query->get();
+
+        // Prepare calendar events
+        $calendarEvents = $tasks->map(function($task) {
+            return [
+                'title' => $task->task,
+                'start' => $task->due_date?->format('Y-m-d'),
+                'backgroundColor' => $task->status ? '#28a745' : 
+                    ($task->priority === 'high' ? '#dc3545' : 
+                    ($task->priority === 'medium' ? '#ffc107' : '#17a2b8')),
+                'url' => route('tasks.show', $task->id)
+            ];
+        });
+
+        return view('home', compact('tasks', 'calendarEvents'));
     }
 
     /**
@@ -40,13 +68,25 @@ class TasksController extends Controller
     {
         $validated = $request->validate([
             'task' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'due_date' => 'nullable|date',
+            'priority' => 'required|in:low,medium,high',
+            'status' => 'required|in:not_started,in_progress,completed',
+            'tags' => 'nullable|string'
         ]);
 
-        // Create task for the authenticated user
-        auth()->user()->tasks()->create([
+        $task = auth()->user()->tasks()->create([
             'task' => $validated['task'],
-            'status' => false, // Default status
+            'description' => $validated['description'],
+            'due_date' => $validated['due_date'],
+            'priority' => $validated['priority'],
+            'status' => $validated['status'] === 'completed',
+            'labels' => $validated['tags'] ? explode(',', $validated['tags']) : null
         ]);
+
+        if ($request->hasFile('attachment')) {
+            // Handle file attachment here
+        }
 
         return redirect()->route('tasks.index')->with("success", "Task created successfully");
     }
@@ -105,5 +145,65 @@ class TasksController extends Controller
         $task->update(['status' => !$task->status]);
 
         return redirect()->route('tasks.index');
+    }
+
+    public function export($format)
+    {
+        $tasks = auth()->user()->tasks;
+
+        if ($format === 'csv') {
+            $csv = Writer::createFromString('');
+            $csv->insertOne(['Task', 'Description', 'Due Date', 'Status', 'Priority']);
+            
+            foreach ($tasks as $task) {
+                $csv->insertOne([
+                    $task->task,
+                    $task->description,
+                    $task->due_date,
+                    $task->status ? 'Completed' : 'Pending',
+                    $task->priority
+                ]);
+            }
+
+            return response($csv->toString())
+                ->header('Content-Type', 'text/csv')
+                ->header('Content-Disposition', 'attachment; filename="tasks.csv"');
+        }
+
+        if ($format === 'pdf') {
+            $pdf = PDF::loadView('exports.tasks-pdf', compact('tasks'));
+            return $pdf->download('tasks.pdf');
+        }
+    }
+
+    public function share(Request $request, $id)
+    {
+        $task = auth()->user()->tasks()->findOrFail($id);
+        $user = User::where('email', $request->email)->firstOrFail();
+        
+        // Create a copy of the task for the other user
+        $newTask = $task->replicate();
+        $newTask->user_id = $user->id;
+        $newTask->save();
+
+        return back()->with('success', 'Task shared successfully');
+    }
+
+    public function addCollaborator(Request $request, string $id)
+    {
+        $task = auth()->user()->tasks()->findOrFail($id);
+        $collaborator = User::where('email', $request->email)->firstOrFail();
+        
+        $task->collaborators()->attach($collaborator->id);
+        
+        return back()->with('success', 'Collaborator added successfully');
+    }
+
+    public function removeCollaborator(string $taskId, string $userId)
+    {
+        $task = auth()->user()->tasks()->findOrFail($taskId);
+        $task->collaborators()->detach($userId);
+        
+        return back()->with('success', 'Collaborator removed successfully');
     }
 }

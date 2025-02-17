@@ -1,13 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>To-Do App</title>
     
-    <!-- Bootstrap 5 CDN -->
+    <!-- Required Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- FullCalendar -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <meta charset="utf-8">
@@ -27,6 +36,56 @@
         body {
             background-color: #f8f9fa;
         }
+        .task-card {
+            transition: transform 0.2s;
+        }
+        .task-card:hover {
+            transform: translateY(-5px);
+        }
+        .dark-mode {
+            background-color: #222;
+            color: #fff;
+        }
+        .stats-card {
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .dark-mode .card {
+            background-color: #333;
+            color: #fff;
+        }
+        .dark-mode .table {
+            color: #fff;
+        }
+        .dark-mode .navbar {
+            background-color: #222 !important;
+        }
+        #calendar {
+            margin: 20px auto;
+            padding: 0 10px;
+            max-width: 1200px;
+            min-height: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .tab-content {
+            padding: 20px 0;
+        }
+        .fc-event {
+            cursor: pointer;
+        }
+        #taskChart {
+            max-height: 400px;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -35,7 +94,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="#">To-Do App</a>
-        </div>
         
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -71,12 +129,35 @@
                 </x-dropdown>
             </div>
 
+            <!-- Dark Mode Toggle -->
+            <div class="ms-auto me-3">
+                <button class="btn btn-outline-light" id="darkModeToggle">
+                    <i class="fas fa-moon"></i> Toggle Dark Mode
+                </button>
+            </div>
+        </div>
     </nav>
 
     <!-- Main Container -->
     <div class="container mt-4">
         @yield('content')
     </div>
+
+    @stack('scripts')
+
+    <!-- Dark Mode JavaScript -->
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+        const body = document.body;
+
+        darkModeToggle.addEventListener('click', function() {
+            html.setAttribute('data-bs-theme', 
+                html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark'
+            );
+            body.classList.toggle('dark-mode');
+        });
+    </script>
 
 </body>
 </html>
