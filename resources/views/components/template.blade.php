@@ -9,6 +9,7 @@
     <!-- Required Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <!-- FullCalendar -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
@@ -31,6 +32,9 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css','resources/js/app.js'])
+
+    <!-- Include shared styles -->
+    @include('components.shared-styles')
 
     <style>
         body {
@@ -89,11 +93,9 @@
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">To-Do App</a>
+            <a class="navbar-brand" href="/"><i class="fas fa-check-circle"></i> TaskMaster</a>
         
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -138,9 +140,10 @@
         </div>
     </nav>
 
-    <!-- Main Container -->
-    <div class="container mt-4">
-        @yield('content')
+    <div class="container mt-5 pt-5">
+        <div class="fade-in">
+            @yield('content')
+        </div>
     </div>
 
     @stack('scripts')
