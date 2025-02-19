@@ -206,4 +206,46 @@ class TasksController extends Controller
         
         return back()->with('success', 'Collaborator removed successfully');
     }
+
+    public function saveTemplate(string $id)
+    {
+        $task = auth()->user()->tasks()->findOrFail($id);
+        
+        // Create a new template from the task
+        $template = $task->replicate();
+        $template->is_template = true;
+        $template->status = false;
+        $template->due_date = null;
+        $template->save();
+        
+        return back()->with('success', 'Task saved as template successfully');
+    }
+
+    public function addSubtask(Request $request, string $id)
+    {
+        $parentTask = auth()->user()->tasks()->findOrFail($id);
+        
+        $validated = $request->validate([
+            'task' => 'required|string|max:255',
+        ]);
+
+        $subtask = auth()->user()->tasks()->create([
+            'task' => $validated['task'],
+            'parent_id' => $parentTask->id,
+            'status' => false,
+            'priority' => $parentTask->priority,
+            'due_date' => $parentTask->due_date,
+        ]);
+        
+        return back()->with('success', 'Subtask added successfully');
+    }
+
+    public function templates()
+    {
+        $templates = auth()->user()->tasks()
+            ->where('is_template', true)
+            ->get();
+            
+        return view('tasks.templates', compact('templates'));
+    }
 }
