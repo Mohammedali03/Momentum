@@ -7,7 +7,7 @@ use App\Models\Tasks;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use League\Csv\Writer;
 
 class TasksController extends Controller
@@ -171,7 +171,7 @@ class TasksController extends Controller
         }
 
         if ($format === 'pdf') {
-            $pdf = PDF::loadView('exports.tasks-pdf', compact('tasks'));
+            $pdf = Pdf::loadView('exports.tasks-pdf', compact('tasks'));
             return $pdf->download('tasks.pdf');
         }
     }
