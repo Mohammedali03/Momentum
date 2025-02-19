@@ -223,9 +223,12 @@ document.addEventListener('DOMContentLoaded', function() {
         aspectRatio: 1.8
     });
 
-    // Initialize Chart
+    // Update chart initialization
     const ctx = document.getElementById('taskChart');
     if (ctx) {
+        const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+        const colors = ThemeToggle.getChartColors(isDark);
+        
         window.taskChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -245,14 +248,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false
+                        display: false,
+                        labels: { color: colors.text }
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 1
+                            stepSize: 1,
+                            color: colors.text
+                        },
+                        grid: {
+                            color: colors.grid,
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: colors.text
+                        },
+                        grid: {
+                            display: false
                         }
                     }
                 }

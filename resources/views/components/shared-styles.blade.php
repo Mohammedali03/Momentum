@@ -64,7 +64,7 @@
     /* Dark Mode Styles */
     .dark-mode {
         background: linear-gradient(135deg, #1a1c23 0%, #242631 100%);
-        color: #fff;
+        color: #e0e0e0;
     }
 
     .dark-mode .card {
@@ -87,6 +87,35 @@
     .dark-mode .table td,
     .dark-mode .table th {
         border-color: #363a4f;
+    }
+
+    .dark-mode .navbar {
+        background: rgba(44, 48, 64, 0.95) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .btn-outline-light {
+        color: #e0e0e0;
+        border-color: #4a4f6b;
+    }
+
+    .dark-mode .btn-outline-light:hover {
+        background-color: #4a4f6b;
+        border-color: #4a4f6b;
+    }
+
+    .dark-mode .dropdown-menu {
+        background-color: #2c3040;
+        border-color: #4a4f6b;
+    }
+
+    .dark-mode .dropdown-item {
+        color: #e0e0e0;
+    }
+
+    .dark-mode .dropdown-item:hover {
+        background-color: #363a4f;
+        color: #fff;
     }
 
     /* Animation Classes */
@@ -112,6 +141,14 @@
     body, .card, .navbar, .form-control, .form-select, .table, 
     .btn, .badge, .chart-container, #calendar {
         transition: all 0.3s ease-in-out;
+    }
+
+    /* Theme Transition */
+    * {
+        transition: background-color 0.3s ease, 
+                    color 0.3s ease, 
+                    border-color 0.3s ease, 
+                    box-shadow 0.3s ease;
     }
 
     /* Dark Mode Calendar Overrides */
@@ -144,5 +181,20 @@
     .dark-mode .chart-container {
         background-color: #2c3040;
         border-color: #363a4f;
+    }
+
+    /* Theme Toggle Button Animation */
+    #darkModeToggle {
+        position: relative;
+        overflow: hidden;
+    }
+
+    #darkModeToggle i {
+        transform: rotate(0deg);
+        transition: transform 0.5s ease;
+    }
+
+    .dark-mode #darkModeToggle i {
+        transform: rotate(360deg);
     }
 </style>
