@@ -111,6 +111,12 @@
                     Analytics
                 </button>
             </li>
+            <!-- Add Timeline View Tab -->
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="timeline-tab" data-bs-toggle="tab" data-bs-target="#timeline-view" type="button" role="tab">
+                    <i class="fas fa-stream"></i> Timeline
+                </button>
+            </li>
         </ul>
     </div>
     <div class="card-body">
@@ -165,6 +171,53 @@
             <div class="tab-pane fade" id="analytics" role="tabpanel">
                 <div class="chart-container" style="position: relative; height:60vh; width:80vw">
                     <canvas id="taskChart"></canvas>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="timeline-view" role="tabpanel">
+                <div class="timeline-container p-4">
+                    @foreach($tasks->sortBy('due_date')->groupBy(function($task) {
+                        return $task->due_date?->format('Y-m-d') ?? 'No Due Date';
+                    }) as $date => $groupedTasks)
+                        <div class="timeline-date mb-4">
+                            <h4 class="text-primary">
+                                @if($date === 'No Due Date')
+                                    {{ $date }}
+                                @else
+                                    {{ \Carbon\Carbon::parse($date)->format('M d, Y') }}
+                                @endif
+                            </h4>
+                            <div class="timeline-items">
+                                @foreach($groupedTasks as $task)
+                                    <div class="timeline-item card mb-3 slide-up" 
+                                         style="border-left: 5px solid {{ $task->priority == 'high' ? '#dc3545' : ($task->priority == 'medium' ? '#ffc107' : '#17a2b8') }}">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h5 class="mb-1">{{ $task->task }}</h5>
+                                                <span class="badge bg-{{ $task->status ? 'success' : 'warning' }}">
+                                                    {{ $task->status ? 'Completed' : 'Pending' }}
+                                                </span>
+                                            </div>
+                                            <p class="text-muted mb-2">{{ Str::limit($task->description, 100) }}</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock"></i> 
+                                                    {{ $task->due_date?->format('H:i') ?? 'No time set' }}
+                                                </small>
+                                                <div class="btn-group">
+                                                    <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-outline-secondary">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -264,4 +317,43 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 });
 </script>
+@endpush
+
+@push('styles')
+<style>
+    .timeline-container {
+        position: relative;
+    }
+    
+    .timeline-date {
+        position: relative;
+        padding-left: 20px;
+    }
+    
+    .timeline-date::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 15px;
+        bottom: 0;
+        width: 2px;
+        background: var(--bs-primary);
+    }
+    
+    .timeline-items {
+        padding-left: 20px;
+    }
+    
+    .timeline-item {
+        transition: transform 0.3s ease;
+    }
+    
+    .timeline-item:hover {
+        transform: translateX(10px);
+    }
+
+    .dark-mode .timeline-date::before {
+        background: #4e73df;
+    }
+</style>
 @endpush

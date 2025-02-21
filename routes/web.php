@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TasksController;
+use App\Http\Controllers\TemplateController; // Add this line
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,6 +41,14 @@ Route::middleware('auth')->group(function () {
         ->name('tasks.save-template');
     Route::get('/templates', [TasksController::class, 'templates'])
         ->name('tasks.templates');
+    
+    // Template routes - grouped with auth middleware
+    Route::controller(TemplateController::class)->group(function () {
+        Route::get('/templates', 'index')->name('templates.index');
+        Route::post('/templates/store', 'store')->name('templates.store');
+        Route::post('/templates/{template}/create', 'createFromTemplate')->name('templates.create-from');
+        Route::delete('/templates/{template}', 'destroy')->name('templates.destroy');
+    });
 });
 
 require __DIR__.'/auth.php';

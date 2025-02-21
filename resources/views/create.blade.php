@@ -34,8 +34,8 @@
             </div>
 
             <div class="mb-4">
-                <label class="form-label">Tags (comma separated)</label>
-                <input type="text" name="tags" class="form-control" placeholder="work, personal, urgent">
+                <label class="form-label">Tags</label>
+                @include('components.tag-manager', ['tags' => []])
             </div>
 
             <div class="d-flex justify-content-between">

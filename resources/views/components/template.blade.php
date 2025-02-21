@@ -188,6 +188,60 @@
             background-color: #4e73df !important;
             border-color: #4e73df !important;
         }
+
+        /* Dropdown Styles */
+        .dropdown-menu {
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .user-dropdown-button {
+            background: white;
+            border-radius: 50px !important;
+            padding: 0.5rem 1.5rem !important;
+            border: 1px solid #e0e0e0 !important;
+            transition: all 0.3s ease;
+            color: #333 !important;
+        }
+
+        .user-dropdown-button:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .dark-mode .user-dropdown-button {
+            background: #363a4f !important;
+            border-color: #4a4f6b !important;
+            color: #fff !important;
+        }
+
+        .dark-mode .dropdown-menu {
+            background-color: #2c3040;
+            border: 1px solid #4a4f6b;
+        }
+
+        .dark-mode .dropdown-item {
+            color: #fff;
+        }
+
+        .dark-mode .dropdown-item:hover {
+            background-color: #4e73df;
+        }
     </style>
 
     <script>
@@ -235,39 +289,43 @@
         <div class="container">
             <a class="navbar-brand" href="/"><i class="fas fa-check-circle"></i> TaskMaster</a>
             
+            <!-- Add Templates Link -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('templates.index') }}">
+                            <i class="fas fa-clipboard-list"></i> Templates
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
             <div class="d-flex align-items-center">
                 <!-- Settings Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ms-6 me-3">
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-bleu-500 dark:text-bleu-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name  }}</div>
-
-                                <div class="ms-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </button>
-                        </x-slot>
-
-                        <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-
-                                <x-dropdown-link :href="route('logout')"
-                                        onclick="event.preventDefault();
-                                                    this.closest('form').submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
+                    <div class="dropdown">
+                        <button class="user-dropdown-button d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-2"></i>
+                            <span>{{ Auth::user()->name }}</span>
+                            <i class="fas fa-chevron-down ms-2"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                    <i class="fas fa-user-edit me-2"></i> Profile
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- Theme Toggle Button - Updated with onclick handler -->
