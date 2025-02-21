@@ -93,69 +93,43 @@
     </style>
 
     <script>
-        // Theme Toggle Utility
-        const ThemeToggle = {
-            init() {
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme) {
-                    this.applyTheme(savedTheme === 'dark');
-                }
-
-                document.getElementById('darkModeToggle').addEventListener('click', () => {
-                    const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-                    this.applyTheme(!isDark);
-                });
-            },
-
-            applyTheme(isDark) {
-                document.documentElement.setAttribute('data-bs-theme', isDark ? 'dark' : 'light');
-                document.body.classList.toggle('dark-mode', isDark);
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-
-                // Update calendar if it exists
-                if (window.calendar) {
-                    window.calendar.render();
-                }
-
-                // Update chart if it exists
-                if (window.taskChart) {
-                    const colors = this.getChartColors(isDark);
-                    this.updateChartColors(window.taskChart, colors);
-                    window.taskChart.update();
-                }
-
-                // Dispatch theme change event
-                window.dispatchEvent(new CustomEvent('themeChange', { detail: { isDark } }));
-            },
-
-            getChartColors(isDark) {
-                return {
-                    text: isDark ? '#fff' : '#666',
-                    grid: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                    background: isDark ? '#2c3040' : '#fff'
-                };
-            },
-
-            updateChartColors(chart, colors) {
-                if (!chart?.options?.scales) return;
-                
-                const scales = chart.options.scales;
-                if (scales.y) {
-                    scales.y.ticks.color = colors.text;
-                    scales.y.grid.color = colors.grid;
-                }
-                if (scales.x) {
-                    scales.x.ticks.color = colors.text;
-                    scales.x.grid.color = colors.grid;
-                }
-                if (chart.options.plugins?.legend) {
-                    chart.options.plugins.legend.labels.color = colors.text;
-                }
+        // Simple Theme Toggle Function
+        function toggleTheme() {
+            const html = document.documentElement;
+            const body = document.body;
+            const isDark = html.getAttribute('data-bs-theme') === 'dark';
+            
+            // Toggle theme
+            html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+            body.classList.toggle('dark-mode');
+            
+            // Update icon
+            const icon = document.querySelector('#themeToggle i');
+            icon.classList.remove('fa-sun', 'fa-moon');
+            icon.classList.add(isDark ? 'fa-moon' : 'fa-sun');
+            
+            // Save preference
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            
+            // Update components
+            if (window.calendar) {
+                window.calendar.render();
             }
-        };
+            if (window.taskChart) {
+                updateChartTheme(!isDark);
+            }
+        }
 
-        // Initialize theme on page load
-        document.addEventListener('DOMContentLoaded', () => ThemeToggle.init());
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('#themeToggle i');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+        });
     </script>
 </head>
 <body>
@@ -198,8 +172,10 @@
                     </x-dropdown>
                 </div>
 
-                <!-- Theme Toggle Button -->
-                <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" id="themeToggle">
+                <!-- Theme Toggle Button - Updated with onclick handler -->
+                <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" 
+                        id="themeToggle" 
+                        onclick="toggleTheme()">
                     <i class="fas fa-moon"></i>
                     <span class="d-none d-md-inline">Theme</span>
                 </button>
@@ -214,68 +190,5 @@
     </div>
 
     @stack('scripts')
-
-    <!-- Theme Toggle Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('themeToggle');
-            const icon = themeToggle.querySelector('i');
-            const html = document.documentElement;
-            const body = document.body;
-
-            // Load saved theme
-            const savedTheme = localStorage.getItem('theme') === 'dark';
-            applyTheme(savedTheme);
-
-            // Toggle theme on click
-            themeToggle.addEventListener('click', () => {
-                const isDark = html.getAttribute('data-bs-theme') === 'dark';
-                applyTheme(!isDark);
-            });
-
-            function applyTheme(isDark) {
-                // Update DOM
-                html.setAttribute('data-bs-theme', isDark ? 'dark' : 'light');
-                body.classList.toggle('dark-mode', isDark);
-                
-                // Update icon
-                icon.classList.remove('fa-sun', 'fa-moon');
-                icon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
-                
-                // Save preference
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-
-                // Update components
-                if (window.calendar) {
-                    window.calendar.render();
-                }
-                if (window.taskChart) {
-                    const colors = {
-                        text: isDark ? '#fff' : '#666',
-                        grid: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
-                    };
-                    updateChartColors(window.taskChart, colors);
-                    window.taskChart.update();
-                }
-            }
-
-            function updateChartColors(chart, colors) {
-                if (!chart?.options?.scales) return;
-                
-                const scales = chart.options.scales;
-                if (scales.y) {
-                    scales.y.ticks.color = colors.text;
-                    scales.y.grid.color = colors.grid;
-                }
-                if (scales.x) {
-                    scales.x.ticks.color = colors.text;
-                    scales.x.grid.color = colors.grid;
-                }
-                if (chart.options.plugins?.legend) {
-                    chart.options.plugins.legend.labels.color = colors.text;
-                }
-            }
-        });
-    </script>
 </body>
 </html>

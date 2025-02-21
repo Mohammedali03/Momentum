@@ -223,12 +223,9 @@ document.addEventListener('DOMContentLoaded', function() {
         aspectRatio: 1.8
     });
 
-    // Update chart initialization
+    // Initialize Chart
     const ctx = document.getElementById('taskChart');
     if (ctx) {
-        const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-        const colors = ThemeToggle.getChartColors(isDark);
-        
         window.taskChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -248,28 +245,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false,
-                        labels: { color: colors.text }
+                        display: false
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 1,
-                            color: colors.text
-                        },
-                        grid: {
-                            color: colors.grid,
-                            drawBorder: false
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: colors.text
-                        },
-                        grid: {
-                            display: false
+                            stepSize: 1
                         }
                     }
                 }
@@ -279,6 +262,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial render of calendar
     calendar.render();
+    
+    // Initialize calendar and chart with current theme
+    const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    
+    // Update chart colors based on current theme
+    updateChartTheme(isDark);
 });
+
+function updateChartTheme(isDark) {
+    if (!window.taskChart) return;
+    
+    const colors = {
+        text: isDark ? '#fff' : '#666',
+        grid: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+    };
+    
+    const options = window.taskChart.options;
+    if (options.scales?.y) {
+        options.scales.y.ticks.color = colors.text;
+        options.scales.y.grid.color = colors.grid;
+    }
+    if (options.scales?.x) {
+        options.scales.x.ticks.color = colors.text;
+        options.scales.x.grid.color = colors.grid;
+    }
+    window.taskChart.update();
+}
 </script>
 @endpush
