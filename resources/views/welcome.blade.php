@@ -141,6 +141,87 @@
         .dark-mode .testimonial-card {
             background: #2c3040;
         }
+
+        .stats-box {
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stats-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--success-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .stats-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .dark-mode .stats-text {
+            color: #e0e0e0;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stats-box {
+            text-align: center;
+        }
+
+        .stats-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--success-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-label {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .stats-description {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .dark-mode .stats-card {
+            background: #2c3040;
+        }
+
+        .dark-mode .stats-label {
+            color: #fff;
+        }
+
+        .dark-mode .stats-description {
+            color: #a0a0a0;
+        }
     </style>
 </head>
 <body>
@@ -213,18 +294,43 @@
 
     <section class="stats bg-light py-5">
         <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Our Impact in Numbers</h2>
             <div class="row text-center">
                 <div class="col-md-4" data-aos="fade-up">
-                    <div class="stats-number">10K+</div>
-                    <div class="stats-text">Active Users</div>
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="fas fa-users text-primary fa-2x mb-3"></i>
+                        </div>
+                        <div class="stats-box">
+                            <div class="stats-number">10K+</div>
+                            <div class="stats-label">Active Users</div>
+                            <div class="stats-description">Growing community of productive professionals</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="stats-number">1M+</</div>
-                    <div class="stats-text">Tasks Completed</div>
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="fas fa-check-circle text-success fa-2x mb-3"></i>
+                        </div>
+                        <div class="stats-box">
+                            <div class="stats-number">1M+</div>
+                            <div class="stats-label">Tasks Completed</div>
+                            <div class="stats-description">Helping teams achieve their goals</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="stats-number">99%</div>
-                    <div class="stats-text">Satisfaction Rate</div>
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="fas fa-star text-warning fa-2x mb-3"></i>
+                        </div>
+                        <div class="stats-box">
+                            <div class="stats-number">99%</div>
+                            <div class="stats-label">Satisfaction Rate</div>
+                            <div class="stats-description">From our valued users worldwide</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
