@@ -90,6 +90,104 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             margin: 20px 0;
         }
+
+        /* Calendar Dark Mode Fixes */
+        .dark-mode .fc-daygrid-day {
+            background-color: #333 !important;
+        }
+
+        .dark-mode .fc-day-today {
+            background-color: #444 !important;
+        }
+
+        .dark-mode .fc-daygrid-day-number,
+        .dark-mode .fc-col-header-cell-cushion {
+            color: #fff !important;
+            text-decoration: none !important;
+        }
+
+        .dark-mode .fc-day-other .fc-daygrid-day-number {
+            color: #888 !important;
+        }
+
+        .dark-mode .fc .fc-button-primary {
+            background-color: #444;
+            border-color: #555;
+        }
+
+        .dark-mode .fc .fc-button-primary:hover {
+            background-color: #555;
+            border-color: #666;
+        }
+
+        .dark-mode .fc .fc-button-active {
+            background-color: #666 !important;
+            border-color: #777 !important;
+        }
+
+        .dark-mode .fc-toolbar-title {
+            color: #fff;
+        }
+
+        .dark-mode .fc {
+            background-color: #2c3040;
+        }
+
+        .dark-mode .fc-theme-standard th {
+            background-color: #363a4f !important;
+            border-color: #444 !important;
+        }
+
+        .dark-mode .fc-scrollgrid-section-header {
+            background-color: #363a4f !important;
+        }
+
+        .dark-mode .fc-col-header-cell {
+            background-color: #363a4f !important;
+        }
+
+        .dark-mode .fc-daygrid-day {
+            background-color: #2c3040 !important;
+            border-color: #444 !important;
+        }
+
+        .dark-mode .fc-day-today {
+            background-color: #3a3f55 !important;
+        }
+
+        .dark-mode .fc-daygrid-day-number,
+        .dark-mode .fc-col-header-cell-cushion {
+            color: #fff !important;
+            text-decoration: none !important;
+        }
+
+        .dark-mode .fc-day-other {
+            background-color: #272936 !important;
+        }
+
+        .dark-mode .fc-day-other .fc-daygrid-day-number {
+            color: #888 !important;
+        }
+
+        .dark-mode .fc-toolbar-title {
+            color: #fff !important;
+        }
+
+        .dark-mode .fc-button {
+            background-color: #363a4f !important;
+            border-color: #444 !important;
+            color: #fff !important;
+        }
+
+        .dark-mode .fc-button:hover {
+            background-color: #4a4f6b !important;
+            border-color: #505573 !important;
+        }
+
+        .dark-mode .fc-button-active {
+            background-color: #4e73df !important;
+            border-color: #4e73df !important;
+        }
     </style>
 
     <script>
