@@ -223,9 +223,15 @@ document.addEventListener('DOMContentLoaded', function() {
         aspectRatio: 1.8
     });
 
-    // Initialize Chart
+    // Initialize Chart with proper colors
     const ctx = document.getElementById('taskChart');
     if (ctx) {
+        const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+        const colors = {
+            text: isDark ? '#fff' : '#333',
+            grid: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+        };
+
         window.taskChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -245,14 +251,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false
+                        display: false,
+                        labels: { color: colors.text }
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 1
+                            stepSize: 1,
+                            color: colors.text
+                        },
+                        grid: {
+                            color: colors.grid
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: colors.text
+                        },
+                        grid: {
+                            display: false
                         }
                     }
                 }
@@ -270,11 +289,12 @@ document.addEventListener('DOMContentLoaded', function() {
     updateChartTheme(isDark);
 });
 
+// Update chart theme function
 function updateChartTheme(isDark) {
     if (!window.taskChart) return;
     
     const colors = {
-        text: isDark ? '#fff' : '#666',
+        text: isDark ? '#fff' : '#333',
         grid: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
     };
     
@@ -286,6 +306,9 @@ function updateChartTheme(isDark) {
     if (options.scales?.x) {
         options.scales.x.ticks.color = colors.text;
         options.scales.x.grid.color = colors.grid;
+    }
+    if (options.plugins?.legend) {
+        options.plugins.legend.labels.color = colors.text;
     }
     window.taskChart.update();
 }
