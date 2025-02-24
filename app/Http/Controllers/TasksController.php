@@ -69,27 +69,31 @@ class TasksController extends Controller
         $validated = $request->validate([
             'task' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'due_date' => 'nullable|date',
-            'priority' => 'required|in:low,medium,high',
-            'status' => 'required|in:not_started,in_progress,completed',
-            'tags' => 'nullable|string'
+            // 'due_date' => 'nullable|date',
+            // 'priority' => 'required|in:low,medium,high',
+            // 'status' => 'required|in:not_started,in_progress,completed',
+            // 'tags' => 'nullable|string',
+            // 'attachment' => 'nullable|file|max:2048', // Optional file validation
         ]);
-
-        $task = auth()->user()->tasks()->create([
-            'task' => $validated['task'],
-            'description' => $validated['description'],
-            'due_date' => $validated['due_date'],
-            'priority' => $validated['priority'],
-            'status' => $validated['status'] === 'completed',
-            'labels' => $validated['tags'] ? explode(',', $validated['tags']) : null
-        ]);
-
-        if ($request->hasFile('attachment')) {
-            // Handle file attachment here
-        }
-
+    
+       $task =  auth()->user()->tasks()->create( $validated
+            // 'task' => $validated['task'],
+            // 'description' => $validated['description'],
+            // 'due_date' => $validated['due_date'],
+            // 'priority' => $validated['priority'],
+            // 'status' => $validated['status'], // Keeping it as a string
+            // 'labels' => $validated['tags'] ? explode(',', $validated['tags']) : null
+        );
+    
+        // if ($request->hasFile('attachment')) {
+        //     $path = $request->file('attachment')->store('attachments', 'public');
+        //     $task->attachment_path = $path;
+        //     $task->save();
+        // }
+    
         return redirect()->route('tasks.index')->with("success", "Task created successfully");
     }
+    
 
     /**
      * Display the specified resource.
