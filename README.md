@@ -1,6 +1,6 @@
-Advanced Work Management
+Momentum
 
-Welcome to Advanced Work Management, a powerful tool designed to help users efficiently manage their tasks, track progress, and optimize productivity with a user-friendly experience.
+Welcome to Momentum, a powerful tool designed to help users efficiently manage their tasks, track progress, and optimize productivity with a user-friendly experience.
 
 Features
 
@@ -73,7 +73,7 @@ Users can personalize their experience with profile settings, including display 
 Installation & Setup
 
 # Clone the repository
-git clone https://github.com/your-repo/advanced-work-management.git
+git clone https://github.com/Mohammedali03/Momentum.git
 
 # Navigate to the project folder
 cd advanced-work-management
