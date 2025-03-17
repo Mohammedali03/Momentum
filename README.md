@@ -72,17 +72,43 @@ Users can personalize their experience with profile settings, including display 
 
 Installation & Setup
 
-# Clone the repository
-git clone https://github.com/Mohammedali03/Momentum.git
+Prerequisites
 
-# Navigate to the project folder
-cd advanced-work-management
+PHP 8+
 
-# Install dependencies
-npm install  # or yarn install
+Composer
 
-# Run the application
-npm run dev  # or yarn dev
+Node.js & npm
+
+MySQL or any supported database
+
+Steps
+
+         # Clone the repository
+         git clone https://github.com/Mohammedali03/Momentum.git
+         
+         # Navigate to the project folder
+         cd momentum
+         
+         # Install PHP dependencies
+         composer install
+         
+         # Install JavaScript dependencies
+         npm install  # or yarn install
+         
+         # Copy the environment file
+         cp .env.example .env
+         
+         # Generate the application key
+         php artisan key:generate
+         
+         # Configure the database in .env file
+         # Then run migrations and seeders
+         php artisan migrate --seed
+         
+         # Run the application
+         php artisan serve & npm run dev
+
 
 Contribution
 
