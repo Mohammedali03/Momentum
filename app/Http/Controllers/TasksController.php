@@ -69,14 +69,17 @@ class TasksController extends Controller
         $validated = $request->validate([
             'task' => 'required|string|max:255',
             'description' => 'nullable|string',
-            // 'due_date' => 'nullable|date',
-            // 'priority' => 'required|in:low,medium,high',
+            'due_date' => 'nullable|date',
+            'priority' => 'required|in:low,medium,high',
             // 'status' => 'required|in:not_started,in_progress,completed',
-            // 'tags' => 'nullable|string',
-            // 'attachment' => 'nullable|file|max:2048', // Optional file validation
+            'tags' => 'nullable|string',
+            'attachment' => 'nullable|file|max:2048', // Optional file validation
         ]);
     
-       $task =  auth()->user()->tasks()->create( $validated
+       $task =  auth()->user()->tasks()->create( [
+        'status'=>false,
+        ...$validated
+       ]
             // 'task' => $validated['task'],
             // 'description' => $validated['description'],
             // 'due_date' => $validated['due_date'],
