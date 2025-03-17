@@ -257,7 +257,7 @@
                     @endguest
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
-                    <img src="https://cdn.dribbble.com/userupload/10494492/file/original-839448b618ada17e1f29db5c803532d8.png?resize=752x" alt="Task Management" class="img-fluid floating">
+                    {{-- <img src="https://cdn.dribbble.com/userupload/10494492/file/original-839448b618ada17e1f29db5c803532d8.png?resize=752x" alt="Task Management" class="img-fluid floating"> --}}
                 </div>
             </div>
         </div>
