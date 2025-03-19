@@ -5,9 +5,10 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('tasks.index') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                    </a>
+                    {{-- <a > --}}
+                        <a class="navbar-brand" style="color: aliceblue" href="{{ route('tasks.index') }}"><i class="fas fa-check-circle"></i> Momentum</a>
+                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> --}}
+                    {{-- </a> --}}
                 </div>
 
                 <!-- Navigation Links -->
