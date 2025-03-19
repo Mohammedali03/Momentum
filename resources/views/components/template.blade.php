@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>To-Do App</title>
+    <title>Momentum</title>
     
     <!-- Required Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -287,7 +287,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/"><i class="fas fa-check-circle"></i> TaskMaster</a>
+            <a class="navbar-brand" href="/"><i class="fas fa-check-circle"></i> Momentum</a>
             
             <!-- Add Templates Link -->
             <div class="collapse navbar-collapse" id="navbarNav">

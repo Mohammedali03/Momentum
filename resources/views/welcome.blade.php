@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TaskMaster - Your Personal Task Manager</title>
+    <title>Momentum - Your Personal Task Manager</title>
     
     <!-- CSS Dependencies -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -227,7 +227,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="fas fa-check-circle"></i> TaskMaster</a>
+            <a class="navbar-brand" href="#"><i class="fas fa-check-circle"></i> Momentum</a>
             <div class="ms-auto">
                 @auth
                     <a href="{{ route('dashboard') }}" class="btn btn-gradient me-2">Dashboard</a>
@@ -251,12 +251,14 @@
             <div class="row align-items-center">
                 <div class="col-lg-6" data-aos="fade-right">
                     <h1 class="display-4 fw-bold mb-4">Organize Your Tasks Like Never Before</h1>
-                    <p class="lead mb-4">TaskMaster helps you manage your tasks efficiently with powerful features, beautiful calendars, and insightful analytics.</p>
+                    <p class="lead mb-4">Momentum helps you manage your tasks efficiently with powerful features, beautiful calendars, and insightful analytics.</p>
                     @guest
                         <a href="{{ route('register') }}" class="btn btn-gradient btn-lg">Get Started Free</a>
                     @endguest
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
+                    <img style="    max-width: 100%;
+    border-radius: 10px;" src="{{ asset('images/image.png') }}" alt="">
                     {{-- <img src="https://cdn.dribbble.com/userupload/10494492/file/original-839448b618ada17e1f29db5c803532d8.png?resize=752x" alt="Task Management" class="img-fluid floating"> --}}
                 </div>
             </div>
@@ -340,7 +342,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5><i class="fas fa-check-circle"></i> TaskMaster</h5>
+                    <h5><i class="fas fa-check-circle"></i> Momentum</h5>
                     <p>Making task management simple and effective.</p>
                 </div>
                 <div class="col-md-4">
@@ -353,7 +355,7 @@
                 </div>
                 <div class="col-md-4">
                     <h5>Contact</h5>
-                    <p><i class="fas fa-envelope"></i> support@taskmaster.com</p>
+                    <p><i class="fas fa-envelope"></i> support@Momentum.com</p>
                     <div class="social-icons">
                         <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
