@@ -230,7 +230,7 @@
             <a class="navbar-brand" href="#"><i class="fas fa-check-circle"></i> Momentum</a>
             <div class="ms-auto">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="btn btn-gradient me-2">Dashboard</a>
+                    <a href="{{ route('tasks.index') }}" style="font-weight: bold" class=" btn btn-gradient me-2">Back To Work</a>
                     <form method="POST" action="{{ route('logout') }}" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-outline-danger">Logout</button>
