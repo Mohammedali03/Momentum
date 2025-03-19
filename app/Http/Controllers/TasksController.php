@@ -71,9 +71,10 @@ class TasksController extends Controller
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
             'priority' => 'required|in:low,medium,high',
-            // 'status' => 'required|in:not_started,in_progress,completed',
             'tags' => 'nullable|string',
             'attachment' => 'nullable|file|max:2048', // Optional file validation
+            // 'status' => 'required|in:not_started,in_progress,completed',
+
         ]);
     
        $task =  auth()->user()->tasks()->create( [
@@ -123,7 +124,12 @@ class TasksController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'task' => 'required|string|max:255'
+            'task' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'due_date' => 'nullable|date',
+            'priority' => 'required|in:low,medium,high',
+            'tags' => 'nullable|string',
+            'attachment' => 'nullable|file|max:2048',
         ]);
 
         $task = auth()->user()->tasks()->findOrFail($id);
