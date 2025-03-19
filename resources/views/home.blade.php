@@ -201,7 +201,7 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <small class="text-muted">
                                                     <i class="fas fa-clock"></i> 
-                                                    {{ $task->due_date?->format('H:i') ?? 'No time set' }}
+                                                    {{ $task->due_date?->format('H-i') ?? 'No time set' }}
                                                 </small>
                                                 <div class="btn-group">
                                                     <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-sm btn-outline-primary">
