@@ -38,7 +38,7 @@ class TemplateController extends Controller
         $task->is_template = false;
         $task->save();
 
-        return redirect()->route('tasks.edit', $task->id)
+        return redirect()->route('tasks.index')
             ->with('success', 'Task created from template');
     }
 

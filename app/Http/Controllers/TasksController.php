@@ -225,7 +225,7 @@ class TasksController extends Controller
         $task = auth()->user()->tasks()->findOrFail($id);
         
         // Create a new template from the task
-        $template = $task->replicate();
+        $template = $task;
         $template->is_template = true;
         $template->status = false;
         $template->due_date = null;
