@@ -11,7 +11,7 @@ class UpdateTasksTable extends Migration
         Schema::table('tasks', function (Blueprint $table) {
             // ...existing columns...
             $table->text('description')->nullable();
-            $table->date('due_date')->nullable();
+            $table->dateTime('due_date')->nullable();
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->string('category')->nullable();
         });
